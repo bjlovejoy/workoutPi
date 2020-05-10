@@ -24,12 +24,12 @@ move weight side to side with knees in the air, stretches?,
 
 class Exercise:
 
-  def __init__(self, name, min, max, increment=1, low_threshold=None, high_threshold=None, yoga=False, challenges=None):
+  def __init__(self, name, min, max, increment=1, low_threshold=None, high_threshold=None, yoga=False, challenges=list()):
     """
     min/max: lowest/highest number of reps
     increment: ensures number of reps is a multiple of this number (1, 2, 5, 10, etc.)
     low_threshold: between easy and moderate activities (number is included in easy)
-    high_threshold: between moderate and intense activities (number is included in moderate)
+    high_threshold: between moderate and vigorous activities (number is included in moderate)
     """
 
     self.name      = name
@@ -47,8 +47,37 @@ class Exercise:
     
   def display(self):
     print()
-
-              
+  
+  def generate_rand_reps(self):
+    
+    generated_num = randint(self.min, self.max_total)
+    intensity = None
+    
+    if generated_num > self.max:
+      intensity = "challenge"
+    elif self.yoga:
+      intensity = "yoga"
+    else:
+      if generated_num > high_threshold:
+        intensity = "vigorous"
+      elif generated_num > low_threshold:
+        intensity = "moderate"
+      else:
+        intensity = "easy"
+    
+    return (generated_num, intensity)
+    
+  def handle_regular(self):
+    if generated_num > self.max:
+      pass #do challenge stuff, scale down to use as index for list
+    
+    else:
+      num = int(generated_num/self.increment) * self.increment
+      self.display(num, ":\t", self.name, sep="")
+      
+  def handle_challenge(self):
+    pass
+    
 class Challenge:
   def __init__(self):
     pass
@@ -62,14 +91,15 @@ num_exercises = len(exercises)
 
 
 interval_min = 15
-interval_sec = interval_min * 60
+interval_time = interval_min * 60  #need to delay between 10-20 minutes based on exercise intensity
 start_time = time()
 
 while True:
 
-  if time() - start_time > interval_sec:  #use minutes
+  if time() - start_time > interval_time:  #use minutes
 
     pass #do stuff here
+         #flash light color of intensity and sound buzzer occasionally until button is pressed
     start_time = time()
 
   sleep(1)
