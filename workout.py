@@ -79,10 +79,12 @@ class Exercise:
     pass
     
 class Challenge:
-  def __init__(self):
-    pass
+  def __init__(self, style, description):
+    self.style = style
+    self.description = description
+  
   def display(self):
-    print()
+    print(description)
     #for time challenges, show either count-down or "Press to stop"
   
   
@@ -97,9 +99,14 @@ start_time = time()
 while True:
 
   if time() - start_time > interval_time:  #use minutes
-
-    pass #do stuff here
-         #flash light color of intensity and sound buzzer occasionally until button is pressed
+    #do stuff here
+    #flash light color of intensity and sound buzzer occasionally until button is pressed
+    activity = exercises[randint(0, num_exercises-1)]
+    info = activity.generate_rand_reps
+    
+    info[0] #num of reps
+    info[1] #intensity
+    
     start_time = time()
 
   sleep(1)
