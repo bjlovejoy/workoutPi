@@ -26,37 +26,43 @@ class Exercise:
 
   def __init__(self, name, min, max, increment=1, low_threshold=None, high_threshold=None, yoga=False, challenges=list()):
     """
-    min/max: lowest/highest number of reps
-    increment: ensures number of reps is a multiple of this number (1, 2, 5, 10, etc.)
-    low_threshold: between easy and moderate activities (number is included in easy)
-    high_threshold: between moderate and vigorous activities (number is included in moderate)
+    name: name of the exercise/activity (str)
+    min/max: lowest/highest number of reps (int)
+    increment: ensures number of reps is a multiple of this number (1, 2, 5, 10, etc.) (int)
+    low_threshold: between easy and moderate activities (number is included in easy) (int)
+    high_threshold: between moderate and vigorous activities (number is included in moderate) (int)
+    yoga: if the exercise is a yoga activity (bool)
+    challenges: a list of Challenge objects (list)
     """
 
-    self.name      = name
-    self.min       = min   #TODO: if min is less than increment, set to increment
-    self.max       = max
-    self.increment = increment
-    self.low_threshold = low_threshold
+    self.name           = name
+    self.min            = min   #TODO: if min is less than increment, set to increment
+    self.max            = max
+    self.increment      = increment
+    self.low_threshold  = low_threshold
     self.high_threshold = high_threshold
-    self.yoga = yoga
-    self.challenges = challenges  #list? dict? list of dict? custom class?
+    self.yoga           = yoga
+    self.challenges     = challenges
 
     self.num_challenges = len(challenges)
-    self.max_total = self.max + self.num_challenges
+    self.max_total      = self.max + self.num_challenges  #to be used for random number generation
     
     
-  def display(self):
-    print()
+  def display(self, num):
+    print(num, "\t", self.name, sep="")
   
   def generate_rand_reps(self):
     
     generated_num = randint(self.min, self.max_total)
     intensity = None
     
-    if generated_num > self.max:
-      intensity = "challenge"
-    elif self.yoga:
+    if self.yoga:
       intensity = "yoga"
+      
+    elif generated_num > self.max:
+      intensity = "challenge"
+      generated_num -= self.max + 1  #convert into index to access challenges list
+      
     else:
       if generated_num > high_threshold:
         intensity = "vigorous"
@@ -73,7 +79,7 @@ class Exercise:
     
     else:
       num = int(generated_num/self.increment) * self.increment
-      self.display(num, ":\t", self.name, sep="")
+      self.display(num)
       
   def handle_challenge(self):
     pass
@@ -96,17 +102,22 @@ interval_min = 15
 interval_time = interval_min * 60  #need to delay between 10-20 minutes based on exercise intensity
 start_time = time()
 
-while True:
+def main():
+  while True:
 
-  if time() - start_time > interval_time:  #use minutes
-    #do stuff here
-    #flash light color of intensity and sound buzzer occasionally until button is pressed
-    activity = exercises[randint(0, num_exercises-1)]
-    info = activity.generate_rand_reps
-    
-    info[0] #num of reps
-    info[1] #intensity
-    
-    start_time = time()
+    if time() - start_time > interval_time:  #use minutes
+      #do stuff here
+      #flash light color of intensity and sound buzzer occasionally until button is pressed
+      activity = exercises[randint(0, num_exercises-1)]
+      info = activity.generate_rand_reps
 
-  sleep(1)
+      num_reps  = info[0]  #number of reps
+      intensity = info[1]  #intensity
+      #need to light, buzzer and display
+
+      start_time = time()
+
+    sleep(1)
+
+if __name__ = "__main__":
+  main()
