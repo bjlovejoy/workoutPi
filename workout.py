@@ -1,7 +1,9 @@
-from gpiozero import Button, LED, PWMLED, RGBLED, Buzzer
-from gpiozero.tones import Tone
 from time import time, sleep
 from random import randint
+
+from gpiozero import Button, LED, PWMLED, RGBLED, Buzzer
+from gpiozero.tones import Tone
+from colorzero import Color   #need to install this?  -> make requirements file with gpiozero, oled, etc.
 #from oled import
 
 led = RGBLED(red=17, green=27, blue=22)
@@ -19,7 +21,6 @@ move weight side to side with knees in the air, stretches?,
 #for reminders, play buzzer once, but still with 3 blinks
 #in meantime, turn led on and off every 1 second (use built-in blink feature)
 #red:intense, orange:moderate, yellow:easy, green:go, blue:get water, purple:yoga
-
 #include display for water
 
 class Exercise:
@@ -47,9 +48,23 @@ class Exercise:
     self.num_challenges = len(challenges)
     self.max_total      = self.max + self.num_challenges  #to be used for random number generation
     
-    
   def display(self, num):
     print(num, "\t", self.name, sep="")
+  
+  def wait_for_input(self, intensity):
+    #wait for button, repeat same thing until pressed, if challenge, use challenge's version
+    if intensity == "challenge":
+      pass #crazy blink and buzzer
+    else:
+      #buzzer 3 times
+      if intensity == "yoga":
+        pass
+      elif intensity == "vigorous":
+        pass
+      elif intensity == "moderate":
+        pass
+      elif intensity == "easy":
+        pass
   
   def generate_rand_reps(self):
     
@@ -74,12 +89,8 @@ class Exercise:
     return (generated_num, intensity)
     
   def handle_regular(self):
-    if generated_num > self.max:
-      pass #do challenge stuff, scale down to use as index for list
-    
-    else:
-      num = int(generated_num/self.increment) * self.increment
-      self.display(num)
+    num = int(generated_num/self.increment) * self.increment
+    self.display(num)
       
   def handle_challenge(self):
     pass
@@ -93,6 +104,16 @@ class Challenge:
     print(description)
     #for time challenges, show either count-down or "Press to stop"
   
+  def wait_for_input(self):
+    pass  #wait for button, repeat same thing until pressed
+  
+  def save_results(self):
+    pass  #use open to save in unique file (save top 3-5)
+  
+  def retrieve_results(self):
+    pass  #similar to above, but collect old results and print to screen
+          #do special effects with buzzer/lights/display if beat records
+  
   
 exercises = [Exercise("Push-Ups", 5, 20, 1, 5, 10), Exercise("Sit Ups", 5, 30)]
 num_exercises = len(exercises)
@@ -105,16 +126,13 @@ start_time = time()
 def main():
   while True:
 
-    if time() - start_time > interval_time:  #use minutes
-      #do stuff here
+    if time() - start_time > interval_time:
       #flash light color of intensity and sound buzzer occasionally until button is pressed
+      #(press button once to display and stop light/buzzer, press again after exercise complete/other for challenges)
       activity = exercises[randint(0, num_exercises-1)]
-      info = activity.generate_rand_reps
-
-      num_reps  = info[0]  #number of reps
-      intensity = info[1]  #intensity
-      #need to light, buzzer and display
-
+      num_reps, intensity = activity.generate_rand_reps()
+      
+      
       start_time = time()
 
     sleep(1)
