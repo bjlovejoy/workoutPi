@@ -1,7 +1,7 @@
 from time import time, sleep
 from random import randint
 
-from gpiozero import Button, LED, PWMLED, RGBLED, Buzzer
+from gpiozero import RGBLED, Button, Buzzer
 from gpiozero.tones import Tone
 from colorzero import Color   #need to install this?  -> make requirements file with gpiozero, oled, etc.
 #from oled import
@@ -9,7 +9,9 @@ from colorzero import Color   #need to install this?  -> make requirements file 
 from exercise import Exercise
 from challenge import Challenge
 
-led = RGBLED(red=17, green=27, blue=22)
+led    = RGBLED(red=17, green=27, blue=22)
+button = Button(, pull_up=False)  #TODO: set pin number
+buzzer = Buzzer()  #TODO: set pin number
 
 """
 push ups, sit ups, jumping jacks, burpees, planks, push up planks,
@@ -32,24 +34,28 @@ move weight side to side with knees in the air, stretches?,
 exercises = [Exercise("Push-Ups", 5, 20, 1, 5, 10), Exercise("Sit Ups", 5, 30)]
 num_exercises = len(exercises)
 
+#in minutes
+interval_min = 10
+interval_max = 20
 
-interval_min = 15
 interval_time = interval_min * 60  #need to delay between 10-20 minutes based on exercise intensity
 start_time = time()
 
+#first activity should be within 5 minutes of plugging it in
+
 def main():
-  while True:
+    while True:
 
-    if time() - start_time > interval_time:
-      #flash light color of intensity and sound buzzer occasionally until button is pressed
-      #(press button once to display and stop light/buzzer, press again after exercise complete/other for challenges)
-      activity = exercises[randint(0, num_exercises-1)]
-      num_reps, intensity = activity.generate_rand_reps()
-      
-      
-      start_time = time()
+        if time() - start_time > interval_time:
 
-    sleep(1)
+            activity = exercises[randint(0, num_exercises-1)]
+            num_reps, intensity = activity.generate_rand_reps()
+            
+            activity.wait_for_input(intensity, led, button, buzzer)
+            
+            start_time = time()
+
+        sleep(1)
 
 if __name__ = "__main__":
-  main()
+    main()
