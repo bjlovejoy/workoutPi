@@ -38,20 +38,34 @@ num_exercises = len(exercises)
 interval_min = 10
 interval_max = 20
 
-interval_time = interval_min * 60  #need to delay between 10-20 minutes based on exercise intensity
+interval_time = interval_min * 60  #TODO: need to delay between 10-20 minutes based on exercise intensity
 start_time = time()
 
-#first activity should be within 5 minutes of plugging it in
+#TODO: first activity should be within 5 minutes of plugging it in
+
+def generate_rand_time():
+    pass  #TODO: start with 1-5 minutes as the bottom "else"
 
 def main():
     while True:
 
         if time() - start_time > interval_time:
 
+            #randomly select excersice and number of reps/challenge items
             activity = exercises[randint(0, num_exercises-1)]
             num_reps, intensity = activity.generate_rand_reps()
             
-            activity.wait_for_input(intensity, led, button, buzzer)
+            #notify user of new activity continuously and wait for button input
+            activity.wait_for_input(intensity, button, led, buzzer)
+
+            #display message on OLED display, wait for user to finish exercise and handle any cleanup
+            if intensity ==  "challenge":
+                challenge_index = num_reps
+                activity.handle_challenge(challenge_index, button, led, buzzer)
+
+            else:
+                activity.handle_regular(num_reps, button, led, buzzer)
+            
             
             start_time = time()
 
