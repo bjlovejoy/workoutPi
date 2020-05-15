@@ -1,7 +1,12 @@
-
 from gpiozero import Button, RGBLED, Buzzer
 from time import time, sleep
 import sys
+
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_SSD1306
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 class Exercise:
 
@@ -159,7 +164,6 @@ class Exercise:
                 sleep(0.1)
                 led.off()
                 sleep(0.1)
-            
             sys.exit()
 
     def handle_challenge(self, challenge_index, button, led, buzzer):
@@ -176,6 +180,7 @@ class Exercise:
             button.wait_for_press()
             led.off()
             stop = round(time() - start, 3)
+            #TODO: store time and report results
         
         elif self.challenges[challenge_index].style = "counter":
             button.wait_for_press()
@@ -198,5 +203,4 @@ class Exercise:
                 sleep(0.1)
                 led.off()
                 sleep(0.1)
-            
             sys.exit()

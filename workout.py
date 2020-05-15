@@ -2,9 +2,13 @@ from time import time, sleep
 from random import randint
 
 from gpiozero import RGBLED, Button, Buzzer
-from gpiozero.tones import Tone
 from colorzero import Color   #need to install this?  -> make requirements file with gpiozero, oled, etc.
-#from oled import
+
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_SSD1306
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 from exercise import Exercise
 from challenge import Challenge
@@ -12,6 +16,27 @@ from challenge import Challenge
 led    = RGBLED(red=17, green=27, blue=22)
 button = Button(, pull_up=False)  #TODO: set pin number
 buzzer = Buzzer()  #TODO: set pin number
+oled   = Adafruit_SSD1306.SSD1306_128_64(rst=None)
+
+oled.begin()    #Initialize library
+oled.clear()    #Clear display
+oled.display()  #Update display
+
+#Create blank image for drawing (mode '1' for 1-bit color)
+width = oled.width
+height = oled.height
+image = Image.new('1', (width, height))
+
+draw = ImageDraw.Draw(image)  #Get drawing object to draw on image
+draw.rectangle((0,0,width,height), outline=0, fill=0)  #Draw a black filled box to clear the image
+
+#Define some constants to allow easy resizing of shapes
+padding = -2
+top = padding
+bottom = height - padding
+x = 0  #Move left to right keeping track of the current x position for drawing shapes
+
+font = ImageFont.load_default()
 
 """
 push ups, sit ups, jumping jacks, burpees, planks, push up planks,
