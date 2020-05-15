@@ -1,24 +1,24 @@
-from gpiozero import Button, RGBLED, Buzzer
 from time import time, sleep
+from random import randint
 import sys
 
-import Adafruit_GPIO.SPI as SPI
-import Adafruit_SSD1306
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+from gpiozero import Button, RGBLED, Buzzer
+
+from challenge import Challenge
+from oled.py import OLED
 
 class Exercise:
 
-    def __init__(self, name, min, max, increment=1, low_threshold=None, high_threshold=None, yoga=False, style="num", challenges=list()):
+    def __init__(self, name, min, max, increment=1, low_threshold=None, high_threshold=None, yoga=False, style="num", unit="rep", challenges=list()):
         """
         name: name of the exercise/activity (str)
-        style: number of reps or for certain amount of time (str - "num", "time")
         min/max: lowest/highest number of reps (int)
         increment: ensures number of reps is a multiple of this number (1, 2, 5, 10, etc.) (int)
         low_threshold: between easy and moderate activities (number is included in easy) (int)
         high_threshold: between moderate and vigorous activities (number is included in moderate) (int)
         yoga: if the exercise is a yoga activity (bool)
+        style: number of reps or for certain amount of time (str - "num", "time")
+        unit: measure of exercise (rep, sec, min, mile, laps, etc.) (str)
         challenges: a list of Challenge objects (list)
         """
 
@@ -35,10 +35,6 @@ class Exercise:
         self.num_challenges = len(challenges)
         self.max_total      = self.max + self.num_challenges  #to be used for random number generation
         self.button_pressed = False
-    
-    def display(self, num):
-        print(num, "\t", self.name, sep="")
-        #TODO: use OLED
   
     def wait_for_input(self, intensity, button, led, buzzer):
         """
@@ -136,9 +132,10 @@ class Exercise:
         
         return (generated_num, intensity)
     
-    def handle_regular(self, num, button, led, buzzer):
+    def handle_regular(self, num, button, led, buzzer, oled):
         num = int(generated_num/self.increment) * self.increment
-        self.display(num)
+        print(num, self.unit, "\t", self.name)
+        oled.num_with_exercise(num, self.unit, self.name)
         sleep(0.5)
 
         if self.style == "num":
@@ -153,11 +150,11 @@ class Exercise:
             sleep(num)
             led.off()
             buzzer.on()
-            sleep(0.5)
+            sleep(0.3)
             buzzer.off()
         
         else:
-            print("ERROR: style not supported ->", self.style, "->", self.name)
+            print("ERROR: style not supported ->", self.style, "->", self.name)   #TODO: consider output file (add to .git_ignore) -> same with all prints
             led.color = "red"
             for i in range(10):
                 led.on()
@@ -166,8 +163,10 @@ class Exercise:
                 sleep(0.1)
             sys.exit()
 
-    def handle_challenge(self, challenge_index, button, led, buzzer):
-        self.challenges[challenge_index].display()
+    def handle_challenge(self, challenge_index, button, led, buzzer, oled):
+        text = self.challenges[challenge_index].description
+        print(text)
+        oled.text_block(text)
         sleep(0.5)
 
         if self.challenges[challenge_index].style == "stopwatch":
