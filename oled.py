@@ -49,6 +49,11 @@ class OLED:
               #TODO: create 2 logs: regular operation and errors
         #https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
 
+    def show_num(self, num):
+        self.clear_image()
+        self.draw.text((self.x, self.top), num, font=font, fill=255)
+        self.disp()
+    
     def show_time(self, recorded_time):
         self.clear_image()
         self.draw.text((self.x, self.top), recorded_time + ' sec', font=font, fill=255)

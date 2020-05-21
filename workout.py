@@ -22,36 +22,40 @@ move weight side to side with knees in the air, stretches?,
 
 """
 
-#for most, blink 3 times in color of activity type and play buzzer 3 times
-#for reminders, play buzzer once, but still with 3 blinks
-#in meantime, turn led on and off every 1 second (use built-in blink feature)
 #red:intense, orange:moderate, yellow:easy, green:go, blue:get water, purple:yoga
-#include display for water
-
-
   
-  
+
 exercises = [Exercise("Push-Ups", 5, 20, 1, 5, 10), Exercise("Sit Ups", 5, 30)]
 num_exercises = len(exercises)
 
-#in minutes
-interval_min = 10
-interval_max = 20
 
-interval_time = interval_min * 60  #TODO: need to delay between 10-20 minutes based on exercise intensity
-start_time = time()
+def generate_rand_time(intensity):
 
-#TODO: first activity should be within 5 minutes of plugging it in
+    interval = 0
 
-def generate_rand_time():
-    pass  #TODO: start with 1-5 minutes as the bottom "else"
+    if intensity == "easy":
+        interval = randint(10, 17)
+    elif intensity == "moderate":
+        interval = randint(15, 20)
+    elif intensity == "vigorous":
+        interval = randint(20, 30)
+    elif intensity == "yoga":
+        interval = randint(10, 17)
+    else:
+        interval = randint(1, 5)
+
+    return (interval * 60)
 
 def main():
+
+    interval_time = generate_rand_time("start")
+    start_time = time()
+
     while True:
 
         if time() - start_time > interval_time:
 
-            #randomly select excersice and number of reps/challenge items
+            #randomly select exercise and number of reps/challenge items
             activity = exercises[randint(0, num_exercises-1)]
             num_reps, intensity = activity.generate_rand_reps()
             
@@ -66,8 +70,8 @@ def main():
             else:
                 activity.handle_regular(num_reps, button, led, buzzer, oled)
             
-            
             start_time = time()
+            interval_time = generate_rand_time(intensity)
 
         sleep(1)
 

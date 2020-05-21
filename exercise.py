@@ -23,7 +23,7 @@ class Exercise:
         """
 
         self.name           = name
-        self.min            = min   #TODO: if min is less than increment, set to increment
+        self.min            = min    #make sure min in >= increment
         self.max            = max
         self.increment      = increment
         self.low_threshold  = low_threshold
@@ -35,7 +35,29 @@ class Exercise:
         self.num_challenges = len(challenges)
         self.max_total      = self.max + self.num_challenges  #to be used for random number generation
         self.button_pressed = False
-  
+
+    def generate_rand_reps(self):
+        
+        generated_num = randint(self.min, self.max_total)
+        intensity = None
+        
+        if self.yoga:
+            intensity = "yoga"
+        
+        elif generated_num > self.max:
+            intensity = "challenge"
+            generated_num -= self.max + 1  #convert into index to access challenges list
+        
+        else:
+            if generated_num > self.high_threshold:
+                intensity = "vigorous"
+            elif generated_num > self.low_threshold:
+                intensity = "moderate"
+            else:
+                intensity = "easy"
+        
+        return (generated_num, intensity)
+
     def wait_for_input(self, intensity, button, led, buzzer):
         """
         intensity: yoga, challenge, vigorous, moderate, easy (str)
@@ -109,28 +131,6 @@ class Exercise:
             if input_device.is_pressed:
                 self.button_pressed = True
             sleep(wait_interval)
-
-    def generate_rand_reps(self):
-        
-        generated_num = randint(self.min, self.max_total)
-        intensity = None
-        
-        if self.yoga:
-            intensity = "yoga"
-        
-        elif generated_num > self.max:
-            intensity = "challenge"
-            generated_num -= self.max + 1  #convert into index to access challenges list
-        
-        else:
-            if generated_num > self.high_threshold:
-                intensity = "vigorous"
-            elif generated_num > self.low_threshold:
-                intensity = "moderate"
-            else:
-                intensity = "easy"
-        
-        return (generated_num, intensity)
     
     def handle_regular(self, num, button, led, buzzer, oled):
         num = int(generated_num/self.increment) * self.increment
@@ -179,7 +179,11 @@ class Exercise:
             button.wait_for_press()
             led.off()
             stop = round(time() - start, 3)
-            #TODO: store time and report results
+            print("Stopwatch event time:", stop)
+            oled.show_time(stop)
+            button.wait_for_press()
+            self.challenges[challenge_index].save_results_stopwatch(stop, oled)
+            button.wait_for_press()
         
         elif self.challenges[challenge_index].style = "counter":
             button.wait_for_press()
@@ -192,7 +196,8 @@ class Exercise:
             buzzer.on()
             sleep(0.5)
             buzzer.off()
-            self.challenges[challenge_index].record_score(button)
+            self.challenges[challenge_index].save_results_counter(button, oled)
+            button.wait_for_press()
         
         else:
             print("ERROR: style not supported ->", self.style, "->", self.name)

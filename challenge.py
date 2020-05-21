@@ -21,35 +21,76 @@ class Challenge:
         self.num_time = num_time
         self.description = description
     
-    def record_score(self, button):
+    def save_results_counter(self, button, oled):
+        records_path = "/home/pi/workoutPi/records/" + self.name
+        edit_file = False
+        nums = list()
 
         collecting = True
         num = 0
         print(num)
+        oled.show_num(num)
 
         while collecting:
-            start = time()
             button.wait_for_press()
-            if time() - start < 2:
+            start = time()
+            while button.is_pressed:
+                sleep(0.01)
+            if time() - start > 1.5:
                 collecting = False
             else:
                 num += 1
                 print(num)
-            sleep(0.15)
+                oled.show_num(num)
+
+        if os.path.getsize(records_path) > 0:
+            with open(records_path, 'r') as rec:
+                nums = rec.readlines()
+                if recorded_time > int(nums[0].rstrip('\n')):
+                    nums[2] = nums[1]
+                    nums[1] = nums[0]
+                    nums[0] = str(recorded_time) + '\n'
+                    edit_file = True
+
+                elif recorded_time > int(nums[1].rstrip('\n')):
+                    nums[2] = nums[1]
+                    nums[1] = str(recorded_time) + '\n'
+                    edit_file = True
+
+                elif recorded_time > int(nums[2].rstrip('\n')):
+                    nums[2] = str(recorded_time) + '\n'
+                    edit_file = True
+
+            if edit_file:
+                with open(records_path, "w") as rec:
+                    rec.writelines(nums)
+        
+        else:
+            record = str(recorded_time) + '\n'
+            nums.append(record)
+            nums.append("0\n")
+            nums.append("0\n")
+            with open(records_path, "w") as rec:
+                rec.writelines(nums)
+
+        #TODO: oled.multiline print all elements of times
     
-    def save_results_stopwatch(self, name, recorded_time):
-        records_path = "/home/pi/workoutPi/records/" + name
+    def save_results_stopwatch(self, recorded_time, oled):
+        records_path = "/home/pi/workoutPi/records/" + self.name    #TODO: make sure records directory is added to .git_ignore
         edit_file = False
         times = list()
 
-        if os.path.getsize(fullpathhere) > 0:
+        if os.path.getsize(records_path) > 0:
             with open(records_path, 'r') as rec:
                 times = rec.readlines()
-                if recorded_time > int(times[0].rstrip('\n')):    #TODO: fix list handling and newlines/writing
+                if recorded_time > int(times[0].rstrip('\n')):
+                    times[2] = times[1]
+                    times[1] = times[0]
                     times[0] = str(recorded_time) + '\n'
                     edit_file = True
 
                 elif recorded_time > int(times[1].rstrip('\n')):
+                    times[2] = times[1]
                     times[1] = str(recorded_time) + '\n'
                     edit_file = True
 
@@ -69,8 +110,11 @@ class Challenge:
             with open(records_path, "w") as rec:
                 rec.writelines(times)
 
-
+        #TODO: oled.multiline print all elements of times
+"""
+TODO:
 
     def retrieve_results(self):
         pass  #similar to above, but collect old results and print to screen
             #do special effects with buzzer/lights/display if beat records
+"""
