@@ -44,9 +44,13 @@ class OLED:
         self.disp()
     
     def text_block(self, text):
-        pass  #TODO: break string up by num characters fit on one line (limit lines and print error if over, don't exit script)
-              #insert newlines to do multiline text (could split text on spaces and word wrap)
-              #TODO: create 2 logs: regular operation and errors
+        self.clear_image()
+        self.draw.multiline_text((self.x, self.top), num + ' ' + unit, font=font, fill=255)
+
+        
+        #TODO: break string up by num characters fit on one line (limit lines and print error if over, don't exit script)
+        #insert newlines to do multiline text (could split text on spaces and word wrap)
+        #TODO: create 2 logs: regular operation and errors
         #https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
 
     def show_num(self, num):

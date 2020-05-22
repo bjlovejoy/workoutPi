@@ -9,8 +9,8 @@ from challenge import Challenge
 from oled import OLED
 
 led    = RGBLED(red=17, green=27, blue=22)
-button = Button(, pull_up=False)  #TODO: set pin number
-buzzer = Buzzer()  #TODO: set pin number
+button = Button(4, pull_up=False)  #TODO: set pin number
+buzzer = Buzzer18)  #TODO: set pin number
 oled   = OLED()
 
 """
