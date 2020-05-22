@@ -57,8 +57,9 @@ class OLED:
         #TODO: create 2 logs: regular operation and errors
         #https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
 
-    def show_num(self, num):
+    def show_num(self, num, text):
         self.clear_image()
+        self.draw.text((self.x, self.top), text, font=self.font_norm, fill=255)
         self.draw.text((self.x, self.top+20), str(num), font=self.font_huge, fill=255)
         self.disp()
     

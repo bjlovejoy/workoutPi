@@ -26,8 +26,7 @@ class Challenge:
 
         collecting = True
         num = 0
-        print(num)
-        oled.show_num(num)
+        oled.show_num(num, "How many?")
 
         while collecting:
             button.wait_for_press()
@@ -38,25 +37,24 @@ class Challenge:
                 collecting = False
             else:
                 num += 1
-                print(num)
-                oled.show_num(num)
+                oled.show_num(num, "How many?")
 
         if os.path.isfile(records_path):
             with open(records_path, 'r') as rec:
                 nums = rec.readlines()
-                if recorded_time > int(nums[0].rstrip('\n')):
+                if num > int(nums[0].rstrip('\n')):
                     nums[2] = nums[1]
                     nums[1] = nums[0]
-                    nums[0] = str(recorded_time) + '\n'
+                    nums[0] = str(num) + '\n'
                     edit_file = True
 
-                elif recorded_time > int(nums[1].rstrip('\n')):
+                elif num > int(nums[1].rstrip('\n')):
                     nums[2] = nums[1]
-                    nums[1] = str(recorded_time) + '\n'
+                    nums[1] = str(num) + '\n'
                     edit_file = True
 
-                elif recorded_time > int(nums[2].rstrip('\n')):
-                    nums[2] = str(recorded_time) + '\n'
+                elif num > int(nums[2].rstrip('\n')):
+                    nums[2] = str(num) + '\n'
                     edit_file = True
 
             if edit_file:
@@ -64,7 +62,7 @@ class Challenge:
                     rec.writelines(nums)
         
         else:
-            record = str(recorded_time) + '\n'
+            record = str(num) + '\n'
             nums.append(record)
             nums.append("0\n")
             nums.append("0\n")
