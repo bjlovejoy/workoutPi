@@ -1,11 +1,10 @@
 import os
 from time import time
 
-import Adafruit_GPIO.SPI as SPI
-import Adafruit_SSD1306
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+from gpiozero import Button, RGBLED, Buzzer
+from colorzero import Color
+
+from oled import OLED
 
 class Challenge:
     def __init__(self, name, style, description, num_time=60):

@@ -3,9 +3,10 @@ from random import randint
 import sys
 
 from gpiozero import Button, RGBLED, Buzzer
+from colorzero import Color
 
 from challenge import Challenge
-from oled.py import OLED
+from oled import OLED
 
 class Exercise:
 
