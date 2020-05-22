@@ -41,7 +41,7 @@ class Challenge:
                 print(num)
                 oled.show_num(num)
 
-        if os.path.getsize(records_path) > 0:
+        if os.path.isfile(records_path):
             with open(records_path, 'r') as rec:
                 nums = rec.readlines()
                 if recorded_time > int(nums[0].rstrip('\n')):
@@ -71,7 +71,7 @@ class Challenge:
             with open(records_path, "w") as rec:
                 rec.writelines(nums)
 
-        #TODO: oled.multiline print all elements of times
+        #TODO: oled.multiline print all elements of times and wait for button
     
     def save_results_stopwatch(self, recorded_time, oled):
         records_path = "/home/pi/workoutPi/records/" + self.name    #TODO: make sure records directory is added to .git_ignore

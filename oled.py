@@ -47,7 +47,7 @@ class OLED:
         self.draw.text((self.x, self.top+25), str(num) + ' ' + unit, font=self.font_large, fill=255)
         self.disp()
     
-    def text_block(self, text):
+    def text_block(self, text):                             #TODO: fix this, not working
         self.clear_image()
         self.draw.multiline_text((self.x, self.top), text, font=self.font_norm, fill=255)
 
@@ -59,7 +59,7 @@ class OLED:
 
     def show_num(self, num):
         self.clear_image()
-        self.draw.text((self.x, self.top), str(num), font=self.font_huge, fill=255)
+        self.draw.text((self.x, self.top+20), str(num), font=self.font_huge, fill=255)
         self.disp()
     
     def show_time(self, recorded_time):
