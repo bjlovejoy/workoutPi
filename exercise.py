@@ -138,7 +138,7 @@ class Exercise:
             sleep(wait_interval)
     
     def handle_regular(self, num, button, led, buzzer, oled):
-        num = int(num/self.increment) * self.increment
+        num = int(num/self.increment) * self.increment            #TODO: rounding not fair, rework (consider removing increment for now)
         print(num, self.unit, "\t", self.name)
         oled.num_with_exercise(num, self.unit, self.name)
         sleep(0.5)

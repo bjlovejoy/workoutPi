@@ -1,5 +1,5 @@
 import os
-from time import time
+from time import time, sleep
 
 from gpiozero import Button, RGBLED, Buzzer
 
