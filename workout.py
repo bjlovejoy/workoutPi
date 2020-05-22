@@ -25,7 +25,7 @@ move weight side to side with knees in the air, stretches?,
 #red:intense, orange:moderate, yellow:easy, green:go, blue:get water, purple:yoga
   
 
-exercises = [Exercise("Push-Ups", 5, 20, 1, 5, 10), Exercise("Sit Ups", 5, 30)]
+exercises = [Exercise("Push-Ups", 5, 20, 1, 5, 10), Exercise("Sit Ups", 5, 30)]  #TODO: replace spaces with underscores, and have underscores removed when printing
 num_exercises = len(exercises)
 
 

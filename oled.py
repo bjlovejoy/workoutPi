@@ -13,8 +13,8 @@ class OLED:
         self.oled.display()  #Update display
 
         #Create blank image for drawing (mode '1' for 1-bit color)
-        self.width = oled.width
-        self.height = oled.height
+        self.width = self.oled.width
+        self.height = self.oled.height
         self.image = Image.new('1', (width, height))
 
         self.draw = ImageDraw.Draw(image)                           #Get drawing object to draw on image
