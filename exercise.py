@@ -86,12 +86,9 @@ class Exercise:
 
         for i in range(num):
             if intensity == "challenge":
-                led.color = colors[i]
-                led.on()
-            else:
-                led.color = color
-                led.on()
+                color = colors[i]
             buzzer.on()
+            led.color = color
             sleep(0.1)
             buzzer.off()
             led.off()
@@ -115,7 +112,7 @@ class Exercise:
         
         self.button_pressed = False
         sleep(0.5)
-        led.on()
+        led.color = color
     
     def notify_and_wait(self, sleep_time, input_device, output_device, output_state, color=None):
         """
@@ -153,9 +150,8 @@ class Exercise:
         elif self.style == "time":
             button.wait_for_press()
             led.off()
-            led.color = Color("green")
             sleep(5)
-            led.on()
+            led.color = Color("green")
             sleep(num)
             led.off()
             buzzer.on()
@@ -166,7 +162,6 @@ class Exercise:
             print("ERROR: style not supported ->", self.style, "->", self.name)   #TODO: consider output file (add to .git_ignore) -> same with all prints
             for i in range(10):
                 led.color = Color("red")
-                led.on()
                 sleep(0.1)
                 led.off()
                 sleep(0.1)
@@ -181,9 +176,8 @@ class Exercise:
         if self.challenges[challenge_index].style == "stopwatch":
             button.wait_for_press()
             led.off()
-            led.color = Color("green")
             sleep(5)
-            led.on()
+            led.color = Color("green")
             start = time()
             button.wait_for_press()
             led.off()
@@ -197,9 +191,8 @@ class Exercise:
         elif self.challenges[challenge_index].style == "counter":
             button.wait_for_press()
             led.off()
-            led.color = Color("green")
             sleep(5)
-            led.on()
+            led.color = Color("green")
             sleep(self.challenges[challenge_index].num_time)
             led.off()
             buzzer.on()
@@ -212,7 +205,6 @@ class Exercise:
             print("ERROR: style not supported ->", self.style, "->", self.name)
             for i in range(10):
                 led.color = Color("red")
-                led.on()
                 sleep(0.1)
                 led.off()
                 sleep(0.1)
