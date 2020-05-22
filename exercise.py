@@ -104,8 +104,7 @@ class Exercise:
                 self.notify_and_wait(0.2, button, buzzer, False)
                 start = time()
             else:
-                led.color = color
-                self.notify_and_wait(0.2, button, led, True)
+                self.notify_and_wait(0.2, button, led, True, color)
                 if self.button_pressed:
                     self.notify_and_wait(0.01, button, led, False)
                 else:
@@ -115,7 +114,7 @@ class Exercise:
         sleep(0.5)
         led.on()
     
-    def notify_and_wait(self, sleep_time, input_device, output_device, output_state):
+    def notify_and_wait(self, sleep_time, input_device, output_device, output_state, color=None):
         """
         sleep_time: desired time to sleep (int: in seconds)
         input_device: button
@@ -126,7 +125,11 @@ class Exercise:
         wait_interval = 0.01   #time between alternating sleep and button reading
 
         if output_state == True:
-            output_device.on()
+            if output_device is type(RGBLED):
+                output_device.color = color
+                output_device.on()
+            else:
+                output_device.on()
         else:
             output_device.off()
 
