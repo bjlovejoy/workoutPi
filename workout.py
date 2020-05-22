@@ -44,7 +44,8 @@ def generate_rand_time(intensity):
     else:
         interval = randint(1, 5)
 
-    return (interval * 60)
+    print("interval_time =", interval)
+    return (interval)    #TODO: replace *60
 
 def main():
 
@@ -57,7 +58,9 @@ def main():
 
             #randomly select exercise and number of reps/challenge items
             activity = exercises[randint(0, num_exercises-1)]
+            print("New activity selected =", activity)
             num_reps, intensity = activity.generate_rand_reps()
+            print("num_reps =", num_reps, "\tintensity =", intensity)
             
             #notify user of new activity continuously and wait for button input
             activity.wait_for_input(intensity, button, led, buzzer)
