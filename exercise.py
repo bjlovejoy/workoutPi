@@ -76,13 +76,13 @@ class Exercise:
         else:
             num = 3
             if intensity == "yoga":
-                led.color = colors[5]
+                color = colors[5]
             elif intensity == "vigorous":
-                led.color = colors[0]
+                color = colors[0]
             elif intensity == "moderate":
-                led.color = colors[1]
+                color = colors[1]
             elif intensity == "easy":
-                led.color = colors[2]
+                color = colors[2]
 
         for i in range(num):
             if intensity == "challenge":
@@ -104,6 +104,7 @@ class Exercise:
                 self.notify_and_wait(0.2, button, buzzer, False)
                 start = time()
             else:
+                led.color = color
                 self.notify_and_wait(0.2, button, led, True)
                 if self.button_pressed:
                     self.notify_and_wait(0.01, button, led, False)
@@ -157,8 +158,8 @@ class Exercise:
         
         else:
             print("ERROR: style not supported ->", self.style, "->", self.name)   #TODO: consider output file (add to .git_ignore) -> same with all prints
-            led.color = Color("red")
             for i in range(10):
+                led.color = Color("red")
                 led.on()
                 sleep(0.1)
                 led.off()
@@ -203,8 +204,8 @@ class Exercise:
         
         else:
             print("ERROR: style not supported ->", self.style, "->", self.name)
-            led.color = Color("red")
             for i in range(10):
+                led.color = Color("red")
                 led.on()
                 sleep(0.1)
                 led.off()
