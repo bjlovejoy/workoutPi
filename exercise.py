@@ -30,7 +30,8 @@ class Exercise:
         self.low_threshold  = low_threshold
         self.high_threshold = high_threshold
         self.yoga           = yoga
-        self.style          = num
+        self.style          = style
+        self.unit           = unit
         self.challenges     = challenges
 
         self.num_challenges = len(challenges)
