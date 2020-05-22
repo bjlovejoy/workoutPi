@@ -87,8 +87,11 @@ class Exercise:
         for i in range(num):
             if intensity == "challenge":
                 led.color = colors[i]
+                led.on()
+            else:
+                led.color = color
+                led.on()
             buzzer.on()
-            led.on()
             sleep(0.1)
             buzzer.off()
             led.off()
