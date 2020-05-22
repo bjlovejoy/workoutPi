@@ -39,13 +39,13 @@ class OLED:
 
     def num_with_exercise(self, num, unit, exercise):
         self.clear_image()
-        self.draw.text((self.x, self.top), num + ' ' + unit, font=self.font, fill=255)
+        self.draw.text((self.x, self.top), str(num) + ' ' + unit, font=self.font, fill=255)
         self.draw.text((self.x, self.top+8), exercise, font=self.font, fill=255)
         self.disp()
     
     def text_block(self, text):
         self.clear_image()
-        self.draw.multiline_text((self.x, self.top), num + ' ' + unit, font=self.font, fill=255)
+        self.draw.multiline_text((self.x, self.top), text, font=self.font, fill=255)
 
         
         #TODO: break string up by num characters fit on one line (limit lines and print error if over, don't exit script)
