@@ -30,7 +30,7 @@ class OLED:
                                                 #https://pillow.readthedocs.io/en/stable/reference/ImageFont.html
     
     def disp(self):
-        self.oled.image(image)
+        self.oled.image(self.image)
         self.oled.display()
 
     def clear_image(self):
