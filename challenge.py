@@ -2,7 +2,6 @@ import os
 from time import time
 
 from gpiozero import Button, RGBLED, Buzzer
-from colorzero import Color
 
 from oled import OLED
 

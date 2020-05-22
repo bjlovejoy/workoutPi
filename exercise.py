@@ -68,7 +68,7 @@ class Exercise:
         
         num = 0
         self.button_pressed = False
-        colors = ["red", "orange", "yellow", "green", "blue", "purple", "white"]
+        colors = [Color("red"), Color("orange"), Color("yellow"), Color("green"), Color("blue"), Color("purple"), Color("white")]
 
         if intensity == "challenge":
             num = 7
@@ -146,7 +146,7 @@ class Exercise:
         elif self.style == "time":
             button.wait_for_press()
             led.off()
-            led.color = "green"
+            led.color = Color("green")
             sleep(5)
             led.on()
             sleep(num)
@@ -157,7 +157,7 @@ class Exercise:
         
         else:
             print("ERROR: style not supported ->", self.style, "->", self.name)   #TODO: consider output file (add to .git_ignore) -> same with all prints
-            led.color = "red"
+            led.color = Color("red")
             for i in range(10):
                 led.on()
                 sleep(0.1)
@@ -174,7 +174,7 @@ class Exercise:
         if self.challenges[challenge_index].style == "stopwatch":
             button.wait_for_press()
             led.off()
-            led.color = "green"
+            led.color = Color("green")
             sleep(5)
             led.on()
             start = time()
@@ -190,7 +190,7 @@ class Exercise:
         elif self.challenges[challenge_index].style == "counter":
             button.wait_for_press()
             led.off()
-            led.color = "green"
+            led.color = Color("green")
             sleep(5)
             led.on()
             sleep(self.challenges[challenge_index].num_time)
@@ -203,7 +203,7 @@ class Exercise:
         
         else:
             print("ERROR: style not supported ->", self.style, "->", self.name)
-            led.color = "red"
+            led.color = Color("red")
             for i in range(10):
                 led.on()
                 sleep(0.1)
