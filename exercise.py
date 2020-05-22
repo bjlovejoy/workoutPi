@@ -125,7 +125,7 @@ class Exercise:
         wait_interval = 0.01   #time between alternating sleep and button reading
 
         if output_state == True:
-            if output_device is type(RGBLED):
+            if type(output_device) is RGBLED:
                 output_device.color = color
             else:
                 output_device.on()

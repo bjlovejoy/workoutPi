@@ -75,7 +75,7 @@ def main():
 
             #randomly select exercise and number of reps/challenge items
             activity = exercises[randint(0, num_exercises-1)]
-            print("New activity selected =", activity)
+            print("New activity selected =", activity.name)
             num_reps, intensity = activity.generate_rand_reps()
             print("num_reps =", num_reps, "\tintensity =", intensity)
             
