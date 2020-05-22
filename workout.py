@@ -10,7 +10,7 @@ from oled import OLED
 
 led    = RGBLED(red=17, green=27, blue=22)
 button = Button(4, pull_up=False)  #TODO: set pin number
-buzzer = Buzzer18)  #TODO: set pin number
+buzzer = Buzzer(18)  #TODO: set pin number
 oled   = OLED()
 
 """
@@ -75,5 +75,5 @@ def main():
 
         sleep(1)
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     main()

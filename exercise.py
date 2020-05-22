@@ -185,7 +185,7 @@ class Exercise:
             self.challenges[challenge_index].save_results_stopwatch(stop, oled)
             button.wait_for_press()
         
-        elif self.challenges[challenge_index].style = "counter":
+        elif self.challenges[challenge_index].style == "counter":
             button.wait_for_press()
             led.off()
             led.color = "green"
