@@ -127,7 +127,6 @@ class Exercise:
         if output_state == True:
             if output_device is type(RGBLED):
                 output_device.color = color
-                output_device.on()
             else:
                 output_device.on()
         else:
