@@ -28,7 +28,7 @@ class OLED:
 
         #self.font = ImageFont.load_default()
         self.font_small = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 10)
-        self.font_norm = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 20)
+        self.font_norm = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 15)
         self.font_large = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 30)
         self.font_huge = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 40)
                                                 #https://pillow.readthedocs.io/en/stable/reference/ImageFont.html

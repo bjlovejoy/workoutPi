@@ -1,5 +1,5 @@
 from time import time, sleep
-from random import randint
+from random import randint, choice
 
 from gpiozero import RGBLED, Button, Buzzer
 from colorzero import Color   #TODO: make requirements file with gpiozero, oled, etc.
@@ -44,7 +44,6 @@ sit_up  = Exercise("Sit_Ups",  5, 30, 5, 10, 20, challenges=[sit_up_stopwatch_20
 
 
 exercises = [push_up, sit_up]  #TODO: replace spaces with underscores, and have underscores removed when printing
-num_exercises = len(exercises)
 
 
 def generate_rand_time(intensity):
@@ -75,7 +74,7 @@ def main():
         if time() - start_time > interval_time:
 
             #randomly select exercise and number of reps/challenge items
-            activity = exercises[randint(0, num_exercises-1)]
+            activity = choice(exercises)
             print("New activity selected =", activity.name)
             num_reps, intensity = activity.generate_rand_reps()
             print("num_reps =", num_reps, "\tintensity =", intensity)
