@@ -100,15 +100,15 @@ class Exercise:
         while not self.button_pressed:
 
             if time() - start > delay:
-                notify_and_wait(0.2, button, buzzer, True)
-                notify_and_wait(0.2, button, buzzer, False)
+                self.notify_and_wait(0.2, button, buzzer, True)
+                self.notify_and_wait(0.2, button, buzzer, False)
                 start = time()
             else:
-                notify_and_wait(0.2, button, led, True)
+                self.notify_and_wait(0.2, button, led, True)
                 if self.button_pressed:
-                    notify_and_wait(0.01, button, led, False)
+                    self.notify_and_wait(0.01, button, led, False)
                 else:
-                    notify_and_wait(0.8, button, led, False)
+                    self.notify_and_wait(0.8, button, led, False)
         
         self.button_pressed = False
         sleep(0.5)
