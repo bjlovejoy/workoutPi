@@ -12,6 +12,7 @@ led    = RGBLED(red=17, green=27, blue=22)
 button = Button(4, pull_up=False)  #TODO: set pin number
 buzzer = Buzzer(18)  #TODO: set pin number
 oled   = OLED()
+oled.clear_image()
 
 """
 push ups, sit ups, crunches, jumping jacks, burpees, planks, push up planks,
@@ -89,6 +90,9 @@ def main():
 
             else:
                 activity.handle_regular(num_reps, button, led, buzzer, oled)
+            
+            led.off()
+            oled.clear_image()
             
             start_time = time()
             interval_time = generate_rand_time(intensity)
