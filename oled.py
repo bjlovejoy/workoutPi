@@ -43,8 +43,8 @@ class OLED:
 
     def num_with_exercise(self, num, unit, exercise):
         self.clear_image()
-        self.draw.text((self.x, self.top), str(num) + ' ' + unit, font=self.font_large, fill=255)
-        self.draw.text((self.x, self.top+12), exercise, font=self.font_norm, fill=255)
+        self.draw.text((self.x, self.top), exercise, font=self.font_norm, fill=255)
+        self.draw.text((self.x, self.top+25), str(num) + ' ' + unit, font=self.font_large, fill=255)
         self.disp()
     
     def text_block(self, text):
