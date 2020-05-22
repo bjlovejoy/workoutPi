@@ -26,7 +26,8 @@ class OLED:
         self.bottom = self.height - padding
         self.x = 0  #Move left to right keeping track of the current x position for drawing shapes
 
-        self.font = ImageFont.load_default()    #try:     arial_large = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 70)
+        self.font = ImageFont.load_default()
+        self.arial_large = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 70)
                                                 #https://pillow.readthedocs.io/en/stable/reference/ImageFont.html
     
     def disp(self):
@@ -39,8 +40,8 @@ class OLED:
 
     def num_with_exercise(self, num, unit, exercise):
         self.clear_image()
-        self.draw.text((self.x, self.top), str(num) + ' ' + unit, font=self.font, fill=255)
-        self.draw.text((self.x, self.top+8), exercise, font=self.font, fill=255)
+        self.draw.text((self.x, self.top), str(num) + ' ' + unit, font=self.arial_large, fill=255)
+        self.draw.text((self.x, self.top+50), exercise, font=self.arial_large, fill=255)
         self.disp()
     
     def text_block(self, text):
@@ -55,10 +56,10 @@ class OLED:
 
     def show_num(self, num):
         self.clear_image()
-        self.draw.text((self.x, self.top), num, font=self.font, fill=255)
+        self.draw.text((self.x, self.top), str(num), font=self.font, fill=255)
         self.disp()
     
     def show_time(self, recorded_time):
         self.clear_image()
-        self.draw.text((self.x, self.top), recorded_time + ' sec', font=self.font, fill=255)
+        self.draw.text((self.x, self.top), str(recorded_time) + ' sec', font=self.font, fill=255)
         self.disp()
