@@ -2,7 +2,6 @@ from time import time, sleep
 from random import randint, choice
 
 from gpiozero import RGBLED, Button, Buzzer
-from colorzero import Color   #TODO: make requirements file with gpiozero, oled, etc.
 
 from exercise import Exercise
 from challenge import Challenge
