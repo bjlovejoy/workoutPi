@@ -33,15 +33,28 @@ font_huge = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 40)
 
 
 #----------------------------------------------------MY TEST AREA----------------------------------------------------
-text = "My name is Brendon and I am a big boy that really needs a happy break"
+text1 = "My name is Brendon and I am a big boy that really needs a happy break"
 text2 = "aaaaa"
 
-text_list = text.split()
+text_list = text1.split()
 
-print(ImageDraw.textsize(text, font=font_norm))
-print(ImageDraw.textsize(text2, font=font_norm))
+#print(ImageDraw.textsize(text1, font=font_norm))
+#print(ImageDraw.textsize(text2, font=font_norm))
 
-draw.multiline_text((x, top + 10), text, font=font_norm, fill=255)
+text_to_print = ""
+
+while text_list:
+
+    fit = True
+    while fit and text_list:
+        x, y = self.draw.textsize(text_to_print + text_list[0], font=font_norm)
+        if x <= 128:
+            text_to_print += text_list.pop(0)
+        else:
+            text_to_print += "\n"
+            fit = False
+
+draw.multiline_text((x, top + 10), text_to_print, font=font_norm, fill=255)
 oled.image(image)
 oled.display()
 
