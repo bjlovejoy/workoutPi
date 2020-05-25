@@ -3,20 +3,21 @@ from time import time, sleep
 
 from gpiozero import Button, RGBLED, Buzzer
 
+from workout import log_data
 from oled import OLED
 
 class Challenge:
-    def __init__(self, name, style, description, num_time=60):
+    def __init__(self, name, style, description, num_time_sec=60):
         """
         name: name of the challenge to save to text file (str)
         style: how long it takes to do activity ("stopwatch") or how many done in timeframe ("counter")   (str)
-        num_time: time for "counter" challenges (int)
+        num_time_sec: time for "counter" challenges (int)
         description: text to output to OLED display for challenge (str)
         """
         
         self.name = name
         self.style = style
-        self.num_time = num_time
+        self.num_time_sec = num_time_sec
         self.description = description
     
     def save_results_counter(self, button, oled):
@@ -76,7 +77,7 @@ class Challenge:
         edit_file = False
         times = list()
 
-        if os.path.getsize(records_path) > 0:
+        if os.path.getsize(records_path) > 0:                 #TODO: one of these is backwards (lowest time first)
             with open(records_path, 'r') as rec:
                 times = rec.readlines()
                 if recorded_time > int(times[0].rstrip('\n')):

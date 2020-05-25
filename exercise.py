@@ -5,16 +5,17 @@ import sys
 from gpiozero import Button, RGBLED, Buzzer
 from colorzero import Color
 
+from workout import log_data
 from challenge import Challenge
 from oled import OLED
 
 class Exercise:
 
-    def __init__(self, name, min, max, increment=1, low_threshold=None, high_threshold=None, yoga=False, style="num", unit="rep", challenges=list()):
+    def __init__(self, name, min, max, low_threshold, high_threshold, multiplier=1, yoga=False, style="num", unit="rep", challenges=list()):
         """
         name: name of the exercise/activity (str)
         min/max: lowest/highest number of reps (int)
-        increment: ensures number of reps is a multiple of this number (1, 2, 5, 10, etc.) (int)
+        multiplier: multiplies number of reps (ex. 1-4 *5 = 5, 10, 15, 20) (int)
         low_threshold: between easy and moderate activities (number is included in easy) (int)
         high_threshold: between moderate and vigorous activities (number is included in moderate) (int)
         yoga: if the exercise is a yoga activity (bool)
@@ -24,10 +25,10 @@ class Exercise:
         """
 
         self.name           = name
-        self.min            = min    #make sure min in >= increment
+        self.min            = min
         self.max            = max
-        self.increment      = increment
-        self.low_threshold  = low_threshold
+        self.multiplier     = multiplier
+        self.low_threshold  = low_threshold    #TODO: make these in line with multiplier
         self.high_threshold = high_threshold
         self.yoga           = yoga
         self.style          = style
@@ -68,7 +69,7 @@ class Exercise:
         
         num = 0
         self.button_pressed = False
-        colors = [Color("red"), Color("orange"), Color("yellow"), Color("green"), Color("blue"), Color("purple"), Color("white")]
+        colors = [Color("red"), Color("orangered"), Color("yellow"), Color("green"), Color("blue"), Color("purple"), Color("white")]
 
         if intensity == "challenge":
             num = 7
@@ -95,11 +96,11 @@ class Exercise:
             sleep(0.1)
 
         start = time()
-        delay = 60
+        delay_sec = 60  #how long to wait before sounding the buzzer reminder
 
         while not self.button_pressed:
 
-            if time() - start > delay:
+            if time() - start > delay_sec:
                 self.notify_and_wait(0.2, button, buzzer, True)
                 self.notify_and_wait(0.2, button, buzzer, False)
                 start = time()
@@ -110,8 +111,7 @@ class Exercise:
                 else:
                     self.notify_and_wait(0.8, button, led, False)
         
-        self.button_pressed = False
-        sleep(0.5)
+        sleep(0.3)
         led.color = color
     
     def notify_and_wait(self, sleep_time, input_device, output_device, output_state, color=None):
@@ -138,8 +138,8 @@ class Exercise:
             sleep(wait_interval)
     
     def handle_regular(self, num, button, led, buzzer, oled):
-        num = int(num/self.increment) * self.increment            #TODO: rounding not fair, rework (consider removing increment for now)
-        print(num, self.unit, "\t", self.name)
+        num *= self.multiplier
+        log_data("Print to OLED: " + str(num) + " " + self.unit)
         oled.num_with_exercise(num, self.unit, self.name)
         sleep(0.5)
 
@@ -158,7 +158,7 @@ class Exercise:
             buzzer.off()
         
         else:
-            print("ERROR: style not supported ->", self.style, "->", self.name)   #TODO: consider output file (add to .git_ignore) -> same with all prints
+            log_data("ERROR: style not supported -> " + self.style + " -> " + self.name)
             for i in range(10):
                 led.color = Color("red")
                 sleep(0.1)
@@ -168,7 +168,7 @@ class Exercise:
 
     def handle_challenge(self, challenge_index, button, led, buzzer, oled):
         text = self.challenges[challenge_index].description
-        print(text)
+        log_data("Print to OLED (challenge): " + text)
         oled.text_block(text)
         sleep(0.5)
 
@@ -181,7 +181,7 @@ class Exercise:
             button.wait_for_press()
             led.off()
             stop = round(time() - start, 3)
-            print("Stopwatch event time:", stop)
+            log_data("Stopwatch event recorded time: " + str(stop))
             oled.show_time(stop)
             button.wait_for_press()
             self.challenges[challenge_index].save_results_stopwatch(stop, oled)
@@ -192,7 +192,7 @@ class Exercise:
             led.off()
             sleep(5)
             led.color = Color("green")
-            sleep(self.challenges[challenge_index].num_time)
+            sleep(self.challenges[challenge_index].num_time_sec)
             led.off()
             buzzer.on()
             sleep(0.5)

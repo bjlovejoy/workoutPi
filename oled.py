@@ -38,7 +38,7 @@ class OLED:
         self.oled.display()
 
     def clear_image(self):
-        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
+        self.oled.clear()
         self.disp()
 
     def num_with_exercise(self, num, unit, exercise):
@@ -49,7 +49,11 @@ class OLED:
     
     def text_block(self, text):                             #TODO: fix this, not working
         self.clear_image()
-        self.draw.multiline_text((self.x, self.top), text, font=self.font_norm, fill=255)
+
+        text_list = text.split()
+
+        self.draw.multiline_text((self.x, self.top + 20), text, font=self.font_norm, fill=255)
+        self.disp()
 
         
         #TODO: break string up by num characters fit on one line (limit lines and print error if over, don't exit script)
