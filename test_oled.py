@@ -34,10 +34,14 @@ font_huge = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 40)
 
 #----------------------------------------------------MY TEST AREA----------------------------------------------------
 text = "My name is Brendon and I am a big boy that really needs a happy break"
+text2 = "aaaaa"
 
 text_list = text.split()
 
-draw.multiline_text((x, top + 20), text, font=font_norm, fill=255)
+print(ImageDraw.textsize(text, font=font_norm))
+print(ImageDraw.textsize(text2, font=font_norm))
+
+draw.multiline_text((x, top + 10), text, font=font_norm, fill=255)
 oled.image(image)
 oled.display()
 
