@@ -57,14 +57,14 @@ class OLED:
 
             fit = True
             while fit and text_list:
-                x, y = self.draw.textsize(text_to_print + text_list[0], font=font_norm)
-                if x <= 128:
+                x_pos, y_pos = self.draw.textsize(text_to_print + text_list[0], font=font_norm)
+                if x_pos <= 128:
                     text_to_print += text_list.pop(0)
                 else:
                     text_to_print += "\n"
                     fit = False
 
-        self.draw.multiline_text((self.x, self.top + 20), text, font=self.font_norm, fill=255)
+        self.draw.multiline_text((self.x, self.top + 20), text_to_print, font=self.font_norm, fill=255)
         self.disp()
 
         

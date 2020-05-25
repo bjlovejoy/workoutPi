@@ -47,9 +47,9 @@ while text_list:
 
     fit = True
     while fit and text_list:
-        x, y = self.draw.textsize(text_to_print + text_list[0], font=font_norm)
-        if x <= 128:
-            text_to_print += text_list.pop(0)
+        x_pos, y_pos = draw.textsize(text_to_print + text_list[0], font=font_norm)
+        if x_pos <= 128:
+            text_to_print += (text_list.pop(0) + " ")
         else:
             text_to_print += "\n"
             fit = False
