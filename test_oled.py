@@ -37,13 +37,11 @@ text1 = "My name is Brendon and I am a big boy that really needs a happy break"
 text2 = "aaaaa"
 
 text_list = text1.split()
-
-#print(ImageDraw.textsize(text1, font=font_norm))
-#print(ImageDraw.textsize(text2, font=font_norm))
-
 text_to_print = ""
+line_limit = 3
+line = 1
 
-while text_list:
+while text_list and line <= line_limit:
 
     fit = True
     while fit and text_list:
@@ -53,8 +51,9 @@ while text_list:
         else:
             text_to_print += "\n"
             fit = False
+    line += 1
 
-draw.multiline_text((x, top + 10), text_to_print, font=font_norm, fill=255)
+draw.multiline_text((x, top + 15), text_to_print, font=font_norm, spacing=3, fill=255)
 oled.image(image)
 oled.display()
 
