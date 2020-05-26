@@ -31,7 +31,7 @@ class OLED:
         self.font_norm = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 15)
         self.font_large = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 30)
         self.font_huge = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 40)
-                                                #https://pillow.readthedocs.io/en/stable/reference/ImageFont.html
+        #https://pillow.readthedocs.io/en/stable/reference/ImageFont.html
     
     def disp(self):
         self.oled.image(self.image)
@@ -47,7 +47,8 @@ class OLED:
         self.draw.text((self.x, self.top+25), str(num) + ' ' + unit, font=self.font_large, fill=255)
         self.disp()
     
-    def text_block(self, text):                             #TODO: fix this, not working
+    def challenge_block(self, text):
+
         self.clear_image()
 
         text_list = text.split()
@@ -59,22 +60,23 @@ class OLED:
 
             fit = True
             while fit and text_list:
-                x_pos, y_pos = self.draw.textsize(text_to_print + text_list[0], font=font_norm)
-                if x_pos <= 128:
+                x_pos, y_pos = self.draw.textsize(text_to_print + text_list[0], font=self.font_norm)
+                if x_pos <= 127:
                     text_to_print += (text_list.pop(0) + " ")
                 else:
                     text_to_print += "\n"
                     fit = False
             line += 1
 
+        self.draw.text((25, self.top), "Challenge", font=self.font_norm, fill=255)
         self.draw.multiline_text((self.x, self.top + 15), text_to_print, font=self.font_norm, spacing=3, fill=255)
         self.disp()
 
-        
-        #TODO: break string up by num characters fit on one line (limit lines and print error if over, don't exit script)
-        #insert newlines to do multiline text (could split text on spaces and word wrap)
-        #TODO: create 2 logs: regular operation and errors
         #https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
+
+    def challenge_records(self, records_list, unit):       #TODO: while waiting for button press, blink new record (if there is one)
+
+        pass
 
     def show_num(self, num, text):
         self.clear_image()

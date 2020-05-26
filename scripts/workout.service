@@ -1,0 +1,11 @@
+[Unit]
+Description=Workout Motivator
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python3 -B workout.py
+WorkingDirectory=/home/pi/workoutPi
+User=pi
+
+[Install]
+WantedBy=multi-user.target

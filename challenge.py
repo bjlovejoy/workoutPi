@@ -70,7 +70,8 @@ class Challenge:
             with open(records_path, "w") as rec:
                 rec.writelines(nums)
 
-        #TODO: oled.multiline print all elements of times and wait for button
+        oled.challenge_records(nums, "reps")
+        button.wait_for_press(0)
     
     def save_results_stopwatch(self, recorded_time, oled):
         records_path = "/home/pi/workoutPi/records/" + self.name    #TODO: make sure records directory is added to .git_ignore
@@ -107,11 +108,5 @@ class Challenge:
             with open(records_path, "w") as rec:
                 rec.writelines(times)
 
-        #TODO: oled.multiline print all elements of times
-"""
-TODO:
-
-    def retrieve_results(self):
-        pass  #similar to above, but collect old results and print to screen
-            #do special effects with buzzer/lights/display if beat records
-"""
+        oled.challenge_records(nums, "sec")
+        button.wait_for_press(0)

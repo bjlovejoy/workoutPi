@@ -169,7 +169,7 @@ class Exercise:
     def handle_challenge(self, challenge_index, button, led, buzzer, oled):
         text = self.challenges[challenge_index].description
         log_data("Print to OLED (challenge): " + text)
-        oled.text_block(text)
+        oled.challenge_block(text)
         sleep(0.5)
 
         if self.challenges[challenge_index].style == "stopwatch":
