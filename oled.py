@@ -74,9 +74,11 @@ class OLED:
 
         #https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
 
-    def challenge_records(self, records_list, unit):       #TODO: while waiting for button press, blink new record (if there is one)
-
-        pass
+    def challenge_records(self, records_list, unit, new_record):       #TODO: while waiting for button press, blink new record (if there is one)
+        self.clear_image()
+        if new_record:
+            self.draw.text((self.x, self.top), "NEW RECORD!", font=self.font_norm, fill=255)
+        #multiline
 
     def show_num(self, num, text):
         self.clear_image()

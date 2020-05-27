@@ -201,7 +201,7 @@ class Exercise:
             button.wait_for_press()
         
         else:
-            print("ERROR: style not supported ->", self.style, "->", self.name)
+            log_data("ERROR: style not supported -> " + self.style + " -> " + self.name)
             for i in range(10):
                 led.color = Color("red")
                 sleep(0.1)

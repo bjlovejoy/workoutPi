@@ -30,8 +30,9 @@ class Challenge:
         oled.show_num(num, "How many?")
 
         while collecting:
-            button.wait_for_press()
+            button.wait_for_press()         #TODO: look at all wait_for_press() and make sure some delay follows it
             start = time()
+            sleep(0.05)
             while button.is_pressed:
                 sleep(0.01)
             if time() - start > 1.5:
@@ -63,6 +64,7 @@ class Challenge:
                     rec.writelines(nums)
         
         else:
+            edit_file = True
             record = str(num) + '\n'
             nums.append(record)
             nums.append("0\n")
@@ -70,29 +72,32 @@ class Challenge:
             with open(records_path, "w") as rec:
                 rec.writelines(nums)
 
-        oled.challenge_records(nums, "reps")
-        button.wait_for_press(0)
+        log_data("Challenge counter event saved: " + str(num) + "\tin list: " + str(nums))
+        log_data("Saved location: " + records_path)
+
+        oled.challenge_records(nums, "reps", edit_file)
+        button.wait_for_press()
     
     def save_results_stopwatch(self, recorded_time, oled):
-        records_path = "/home/pi/workoutPi/records/" + self.name    #TODO: make sure records directory is added to .git_ignore
+        records_path = "/home/pi/workoutPi/records/" + self.name
         edit_file = False
         times = list()
 
-        if os.path.getsize(records_path) > 0:                 #TODO: one of these is backwards (lowest time first)
+        if os.path.getsize(records_path) > 0:
             with open(records_path, 'r') as rec:
                 times = rec.readlines()
-                if recorded_time > int(times[0].rstrip('\n')):
+                if recorded_time < int(times[0].rstrip('\n')):
                     times[2] = times[1]
                     times[1] = times[0]
                     times[0] = str(recorded_time) + '\n'
                     edit_file = True
 
-                elif recorded_time > int(times[1].rstrip('\n')):
+                elif recorded_time < int(times[1].rstrip('\n')):
                     times[2] = times[1]
                     times[1] = str(recorded_time) + '\n'
                     edit_file = True
 
-                elif recorded_time > int(times[2].rstrip('\n')):
+                elif recorded_time < int(times[2].rstrip('\n')):
                     times[2] = str(recorded_time) + '\n'
                     edit_file = True
 
@@ -101,6 +106,7 @@ class Challenge:
                     rec.writelines(times)
         
         else:
+            edit_file = True
             record = str(recorded_time) + '\n'
             times.append(record)
             times.append("0\n")
@@ -108,5 +114,5 @@ class Challenge:
             with open(records_path, "w") as rec:
                 rec.writelines(times)
 
-        oled.challenge_records(nums, "sec")
-        button.wait_for_press(0)
+        oled.challenge_records(nums, "sec", edit_file)
+        button.wait_for_press()
