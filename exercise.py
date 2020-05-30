@@ -13,8 +13,12 @@ def log_data(text):
     
     hour_min = (datetime.datetime.now()).strftime("%H:%M")
     log_path = "/home/pi/workoutPi/logs/error_log_" + today_date + ".txt"
+    
+    append_write = "w"
+    if os.path.isfile(log_path):
+        append_write = "a"
 
-    with open(log_path, "a") as log:
+    with open(log_path, append_write) as log:
         line = hour_min + "\t" + text + "\n"
         log.write(line)
 
