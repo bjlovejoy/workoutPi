@@ -8,6 +8,7 @@ from oled import OLED
 
 def log_data(text):
     
+    today_date = str(datetime.date.today()).replace("-", "_")
     hour_min = (datetime.datetime.now()).strftime("%H:%M")
     log_path = "/home/pi/workoutPi/logs/error_log_" + today_date + ".txt"
 

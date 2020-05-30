@@ -12,6 +12,9 @@ sudo apt install -y python3-pip
 sudo apt install -y python3-setuptools
 sudo apt install -y python3-rpi.gpio
 
+mkdir /home/pi/workoutPi/logs
+mkdir /home/pi/workoutPi/records
+
 #With the I2C libraries installed I used the i2cdetect command to find the module on the I2C bus
 echo -e "\n\n"
 i2cdetect -y 1     #or i2cdetect -y 0

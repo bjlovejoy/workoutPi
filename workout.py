@@ -16,8 +16,6 @@ buzzer = Buzzer(18)
 oled   = OLED()
 oled.clear_image()
 
-today_date = str(datetime.date.today()).replace("-", "_")
-
 def generate_rand_time(intensity):
 
     interval = 0
@@ -39,6 +37,7 @@ def generate_rand_time(intensity):
 
 def log_data(text):
     
+    today_date = str(datetime.date.today()).replace("-", "_")
     hour_min = (datetime.datetime.now()).strftime("%H:%M")
     log_path = "/home/pi/workoutPi/logs/error_log_" + today_date + ".txt"
 
