@@ -28,7 +28,7 @@ class Exercise:
         self.min            = min
         self.max            = max
         self.multiplier     = multiplier
-        self.low_threshold  = low_threshold    #TODO: make these in line with multiplier
+        self.low_threshold  = low_threshold
         self.high_threshold = high_threshold
         self.yoga           = yoga
         self.style          = style
@@ -140,14 +140,15 @@ class Exercise:
     def handle_regular(self, num, button, led, buzzer, oled):
         num *= self.multiplier
         log_data("Print to OLED: " + str(num) + " " + self.unit)
-        oled.num_with_exercise(num, self.unit, self.name)
+        oled.num_with_exercise(num, self.unit, self.name.replace("_", " "))
         sleep(0.5)
 
         if self.style == "num":
-            button.wait_for_press()
+            button.wait_for_press()    #When finished with exercise
+            sleep(0.1)
         
         elif self.style == "time":
-            button.wait_for_press()
+            button.wait_for_press()    #To start timer
             led.off()
             sleep(5)
             led.color = Color("green")
@@ -173,22 +174,23 @@ class Exercise:
         sleep(0.5)
 
         if self.challenges[challenge_index].style == "stopwatch":
-            button.wait_for_press()
+            button.wait_for_press()   #To begin 5 second count-down
             led.off()
             sleep(5)
             led.color = Color("green")
             start = time()
-            button.wait_for_press()
+            button.wait_for_press()   #To stop timer and record time
+            sleep(0.1)
             led.off()
             stop = round(time() - start, 3)
             log_data("Stopwatch event recorded time: " + str(stop))
             oled.show_time(stop)
-            button.wait_for_press()
+            button.wait_for_press()   #To leave screen showing resulting time
             self.challenges[challenge_index].save_results_stopwatch(stop, oled)
-            button.wait_for_press()
+            button.wait_for_press()   #To leave screen with top 3 records
         
         elif self.challenges[challenge_index].style == "counter":
-            button.wait_for_press()
+            button.wait_for_press()   #To begin 5 second count-down
             led.off()
             sleep(5)
             led.color = Color("green")
@@ -198,7 +200,7 @@ class Exercise:
             sleep(0.5)
             buzzer.off()
             self.challenges[challenge_index].save_results_counter(button, oled)
-            button.wait_for_press()
+            button.wait_for_press()   #To leave screen with top 3 records
         
         else:
             log_data("ERROR: style not supported -> " + self.style + " -> " + self.name)

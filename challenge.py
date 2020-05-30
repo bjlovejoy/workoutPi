@@ -30,7 +30,7 @@ class Challenge:
         oled.show_num(num, "How many?")
 
         while collecting:
-            button.wait_for_press()         #TODO: look at all wait_for_press() and make sure some delay follows it
+            button.wait_for_press()
             start = time()
             sleep(0.05)
             while button.is_pressed:
@@ -76,7 +76,6 @@ class Challenge:
         log_data("Saved location: " + records_path)
 
         oled.challenge_records(nums, "reps", edit_file)
-        button.wait_for_press()
     
     def save_results_stopwatch(self, recorded_time, oled):
         records_path = "/home/pi/workoutPi/records/" + self.name
@@ -115,4 +114,3 @@ class Challenge:
                 rec.writelines(times)
 
         oled.challenge_records(nums, "sec", edit_file)
-        button.wait_for_press()

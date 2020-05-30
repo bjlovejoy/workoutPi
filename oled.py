@@ -78,7 +78,13 @@ class OLED:
         self.clear_image()
         if new_record:
             self.draw.text((self.x, self.top), "NEW RECORD!", font=self.font_norm, fill=255)
-        #multiline
+
+        text_to_print = ""
+        for record in records_list:
+            text_to_print += (record.rstrip('\n') + ' ' + unit + '\n')
+
+        self.draw.multiline_text((self.x, self.top + 15), text_to_print, font=self.font_norm, spacing=3, fill=255)
+        self.disp()
 
     def show_num(self, num, text):
         self.clear_image()

@@ -28,7 +28,7 @@ sit_up_counter_30s = Challenge("sit_up_counter_30s", "counter", "Do as many situ
 sit_up_counter_1m = Challenge("sit_up_counter_1m", "counter", "Do as many situps as you can in 1 min", 6)
 
 push_up = Exercise("Push_Ups", 5, 6, 7, 12, challenges=[push_up_stopwatch_10, push_up_stopwatch_15, push_up_stopwatch_20, push_up_counter_30s, push_up_counter_1m])
-sit_up  = Exercise("Sit_Ups",  1, 6, 10, 20, multiplier=5, challenges=[sit_up_stopwatch_20, sit_up_stopwatch_30, sit_up_counter_30s, sit_up_counter_1m])
+sit_up  = Exercise("Sit_Ups",  1, 6, 2, 4, multiplier=5, challenges=[sit_up_stopwatch_20, sit_up_stopwatch_30, sit_up_counter_30s, sit_up_counter_1m])
 
 
 
