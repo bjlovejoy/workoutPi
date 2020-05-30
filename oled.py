@@ -30,6 +30,7 @@ class OLED:
         self.font_small = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 10)
         self.font_norm = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 15)
         self.font_large = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 30)
+        self.font_large2 = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 20)
         self.font_huge = ImageFont.truetype("/home/pi/workoutPi/arial.ttf", 40)
         #https://pillow.readthedocs.io/en/stable/reference/ImageFont.html
     
@@ -39,6 +40,7 @@ class OLED:
 
     def clear_image(self):
         self.oled.clear()
+        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         self.oled.display()
 
     def num_with_exercise(self, num, unit, exercise):
@@ -94,5 +96,5 @@ class OLED:
     
     def show_time(self, recorded_time):
         self.clear_image()
-        self.draw.text((self.x, self.top), str(recorded_time) + ' sec', font=self.font_large, fill=255)
+        self.draw.text((self.x, self.top+20), str(recorded_time) + ' sec', font=self.font_large2, fill=255)
         self.disp()
