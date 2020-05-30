@@ -29,7 +29,7 @@ def generate_rand_time(intensity):
     elif intensity == "yoga":
         interval = randint(10, 15)
     elif intensity == "challenge":
-        interval = randint(23, 27)
+        interval = randint(20, 27)
     else:
         interval = randint(1, 5)
 

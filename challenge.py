@@ -99,18 +99,18 @@ class Challenge:
         if os.path.isfile(records_path):
             with open(records_path, 'r') as rec:
                 times = rec.readlines()
-                if recorded_time < int(times[0].rstrip('\n')):
+                if recorded_time < float(times[0].rstrip('\n')):
                     times[2] = times[1]
                     times[1] = times[0]
                     times[0] = str(recorded_time) + '\n'
                     edit_file = True
 
-                elif recorded_time < int(times[1].rstrip('\n')):
+                elif recorded_time < float(times[1].rstrip('\n')):
                     times[2] = times[1]
                     times[1] = str(recorded_time) + '\n'
                     edit_file = True
 
-                elif recorded_time < int(times[2].rstrip('\n')):
+                elif recorded_time < float(times[2].rstrip('\n')):
                     times[2] = str(recorded_time) + '\n'
                     edit_file = True
 
