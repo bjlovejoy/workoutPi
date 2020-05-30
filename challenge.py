@@ -127,4 +127,4 @@ class Challenge:
             with open(records_path, "w") as rec:
                 rec.writelines(times)
 
-        oled.challenge_records(nums, "sec", edit_file)
+        oled.challenge_records(times, "sec", edit_file)
