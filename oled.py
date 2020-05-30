@@ -40,7 +40,7 @@ class OLED:
 
     def clear_image(self):
         self.oled.clear()
-        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
+        #self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         self.oled.display()
 
     def num_with_exercise(self, num, unit, exercise):

@@ -35,7 +35,7 @@ class Challenge:
         self.description = description
     
     def save_results_counter(self, button, oled):
-        records_path = "/home/pi/workoutPi/records/" + self.name
+        records_path = "/home/pi/workoutPi/records/" + self.name + ".txt"
         edit_file = False
         nums = list()
 
@@ -92,11 +92,11 @@ class Challenge:
         oled.challenge_records(nums, "reps", edit_file)
     
     def save_results_stopwatch(self, recorded_time, oled):
-        records_path = "/home/pi/workoutPi/records/" + self.name
+        records_path = "/home/pi/workoutPi/records/" + self.name + ".txt"
         edit_file = False
         times = list()
 
-        if os.path.getsize(records_path) > 0:
+        if os.path.isfile(records_path):
             with open(records_path, 'r') as rec:
                 times = rec.readlines()
                 if recorded_time < int(times[0].rstrip('\n')):
