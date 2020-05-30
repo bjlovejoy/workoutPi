@@ -40,18 +40,17 @@ class OLED:
 
     def clear_image(self):
         self.oled.clear()
-        #self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         self.oled.display()
 
     def num_with_exercise(self, num, unit, exercise):
-        self.clear_image()
+        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         self.draw.text((self.x, self.top), exercise, font=self.font_norm, fill=255)
         self.draw.text((self.x, self.top+25), str(num) + ' ' + unit, font=self.font_large, fill=255)
         self.disp()
     
     def challenge_block(self, text):
 
-        self.clear_image()
+        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
 
         text_list = text.split()
         text_to_print = ""
@@ -77,7 +76,7 @@ class OLED:
         #https://pillow.readthedocs.io/en/stable/reference/ImageDraw.html
 
     def challenge_records(self, records_list, unit, new_record):       #TODO: while waiting for button press, blink new record (if there is one)
-        self.clear_image()
+        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         if new_record:
             self.draw.text((self.x, self.top), "NEW RECORD!", font=self.font_norm, fill=255)
 
@@ -89,12 +88,12 @@ class OLED:
         self.disp()
 
     def show_num(self, num, text):
-        self.clear_image()
+        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         self.draw.text((self.x, self.top), text, font=self.font_norm, fill=255)
         self.draw.text((self.x, self.top+20), str(num), font=self.font_huge, fill=255)
         self.disp()
     
     def show_time(self, recorded_time):
-        self.clear_image()
+        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         self.draw.text((self.x, self.top+20), str(recorded_time) + ' sec', font=self.font_large2, fill=255)
         self.disp()
