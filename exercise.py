@@ -1,13 +1,22 @@
+import sys
+import datetime
 from time import time, sleep
 from random import randint
-import sys
 
 from gpiozero import Button, RGBLED, Buzzer
 from colorzero import Color
 
-from workout import log_data
 from challenge import Challenge
 from oled import OLED
+
+def log_data(text):
+    
+    hour_min = (datetime.datetime.now()).strftime("%H:%M")
+    log_path = "/home/pi/workoutPi/logs/error_log_" + today_date + ".txt"
+
+    with open(log_path, "a") as log:
+        line = hour_min + "\t" + text + "\n"
+        log.write(line)
 
 class Exercise:
 
