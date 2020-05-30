@@ -1,4 +1,5 @@
-
+from exercise import Exercise
+from challenge import Challenge
 
 """
 push ups, sit ups, crunches, jumping jacks, burpees, planks, push up planks,
