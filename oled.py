@@ -39,7 +39,7 @@ class OLED:
 
     def clear_image(self):
         self.oled.clear()
-        self.disp()
+        self.oled.display()
 
     def num_with_exercise(self, num, unit, exercise):
         self.clear_image()
