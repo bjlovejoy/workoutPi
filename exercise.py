@@ -39,12 +39,12 @@ class Exercise:
         challenges: a list of Challenge objects (list)
         """
 
-        self.name           = name
-        self.min            = min
-        self.max            = max
+        self.name           = name.replace(" ", "_")
+        self.min            = int(min/multiplier)
+        self.max            = int(max/multiplier)
+        self.low_threshold  = int(low_threshold/multiplier)
+        self.high_threshold = int(high_threshold/multiplier)
         self.multiplier     = multiplier
-        self.low_threshold  = low_threshold
-        self.high_threshold = high_threshold
         self.yoga           = yoga
         self.style          = style
         self.unit           = unit

@@ -35,7 +35,7 @@ def generate_rand_time(intensity):
 
     print("interval_time =", interval)
     log_data("Interval time = " + str(interval))
-    return (interval)    #TODO: replace *60
+    return (interval * 60)
 
 def log_data(text):
     
