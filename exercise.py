@@ -10,6 +10,10 @@ from colorzero import Color
 from challenge import Challenge
 from oled import OLED
 
+'''
+Creates or appends to file in logs directory with below date format
+Each line contains the time of entry, followed by a tab, the entry text and a newline
+'''
 def log_data(text):
 
     today_date = str(datetime.date.today()).replace("-", "_")
@@ -54,6 +58,9 @@ class Exercise:
         self.max_total      = self.max + self.num_challenges  #to be used for random number generation
         self.button_pressed = False
 
+    '''
+    Randomly returns a number of reps for the activity along with its derived difficulty
+    '''
     def generate_rand_reps(self):
         
         generated_num = randint(self.min, self.max_total)
@@ -76,6 +83,9 @@ class Exercise:
         
         return (generated_num, intensity)
 
+    '''
+    After selecting the activity and its features, notify the user and wait for acknowledgement by pressing the button
+    '''
     def wait_for_input(self, intensity, button, led, buzzer):
         """
         intensity: yoga, challenge, vigorous, moderate, easy (str)
@@ -129,6 +139,9 @@ class Exercise:
         sleep(0.3)
         led.color = color
     
+    '''
+    balance reading the button and outputting through a buzzer or led in order to do both on time
+    '''
     def notify_and_wait(self, sleep_time, input_device, output_device, output_state, color=None):
         """
         sleep_time: desired time to sleep (int: in seconds)
@@ -152,6 +165,9 @@ class Exercise:
                 self.button_pressed = True
             sleep(wait_interval)
     
+    '''
+    what to do for a regular activity
+    '''
     def handle_regular(self, num, button, led, buzzer, oled):
         num *= self.multiplier
         log_data("Print to OLED: " + str(num) + " " + self.unit)
@@ -165,12 +181,12 @@ class Exercise:
         elif self.style == "time":
             button.wait_for_press()    #To start timer
             led.off()
-            sleep(5)
+            sleep(3)
             led.color = Color("green")
             sleep(num)
             led.off()
             buzzer.on()
-            sleep(0.3)
+            sleep(0.5)
             buzzer.off()
         
         else:
@@ -182,6 +198,9 @@ class Exercise:
                 sleep(0.1)
             sys.exit()
 
+    '''
+    what to do for a challenge activity
+    '''
     def handle_challenge(self, challenge_index, button, led, buzzer, oled):
         text = self.challenges[challenge_index].description
         log_data("Print to OLED (challenge): " + text)
@@ -214,7 +233,7 @@ class Exercise:
             buzzer.on()
             sleep(0.5)
             buzzer.off()
-            self.challenges[challenge_index].save_results_counter(button, oled)
+            self.challenges[challenge_index].save_results_counter(button, oled, led)
             button.wait_for_press()   #To leave screen with top 3 records
         
         else:

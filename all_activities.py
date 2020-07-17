@@ -41,7 +41,7 @@ crunches        = Exercise("Crunches", 10, 40, 20, 30, multiplier=2)
 jumping_jacks   = Exercise("Jumping Jacks", 10, 50, 25, 40, multiplier=5)
 burpees         = Exercise("Burpees", 5, 15, 4, 10, challenges=[burpees_stopwatch_10, burpees_stopwatch_15, burpees_counter_30s, burpees_counter_1m])
 planks          = Exercise("Plank", 30, 120, 30, 60, multiplier=30, style="time", unit="sec")
-push_up_planks  = Exercise("Push Up Plank", 5, 10, 4, 6, challenges=[])
+push_up_planks  = Exercise("Push Up Plank", 3, 10, 4, 6, challenges=[])
 
 exercises = [push_up, sit_up, crunches, jumping_jacks, burpees]
 
@@ -52,6 +52,6 @@ exercises = [push_up, sit_up, crunches, jumping_jacks, burpees]
 squats, lunges, bicyles, scissor kicks, curls, bench press, run/jog,
 peck deck, downward dog, flutter kicks, superman, upward seal,
 run in place, bicycle sit up, sit up with legs in the air, mountain climbers,
-move weight side to side with knees in the air, stretches?, 
-
+move weight side to side with knees in the air, stretches?, v sit-up, dead bug, bicycle crunch
+leg raises, ankle taps
 """

@@ -6,6 +6,10 @@ from gpiozero import Button, RGBLED, Buzzer
 
 from oled import OLED
 
+'''
+Creates or appends to file in logs directory with below date format
+Each line contains the time of entry, followed by a tab, the entry text and a newline
+'''
 def log_data(text):
     
     today_date = str(datetime.date.today()).replace("-", "_")
@@ -34,7 +38,7 @@ class Challenge:
         self.num_time_sec = num_time_sec
         self.description = description
     
-    def save_results_counter(self, button, oled):
+    def save_results_counter(self, button, oled, led):
         records_path = "/home/pi/workoutPi/records/" + self.name + ".txt"
         edit_file = False
         nums = list()
@@ -43,6 +47,7 @@ class Challenge:
         num = 0
         oled.show_num(num, "How many?")
 
+        #TODO: FIX THIS TO WORK LIKE ONE IN workout.py
         while collecting:
             button.wait_for_press()
             start = time()
@@ -99,18 +104,18 @@ class Challenge:
         if os.path.isfile(records_path):
             with open(records_path, 'r') as rec:
                 times = rec.readlines()
-                if recorded_time < float(times[0].rstrip('\n')):
+                if recorded_time < float(times[0].rstrip('\n')) or float(times[0].rstrip('\n')) == 0:
                     times[2] = times[1]
                     times[1] = times[0]
                     times[0] = str(recorded_time) + '\n'
                     edit_file = True
 
-                elif recorded_time < float(times[1].rstrip('\n')):
+                elif recorded_time < float(times[1].rstrip('\n')) or float(times[1].rstrip('\n')) == 0:
                     times[2] = times[1]
                     times[1] = str(recorded_time) + '\n'
                     edit_file = True
 
-                elif recorded_time < float(times[2].rstrip('\n')):
+                elif recorded_time < float(times[2].rstrip('\n')) or float(times[2].rstrip('\n')) == 0:
                     times[2] = str(recorded_time) + '\n'
                     edit_file = True
 
