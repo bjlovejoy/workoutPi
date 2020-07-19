@@ -43,22 +43,26 @@ class Challenge:
         edit_file = False
         nums = list()
 
-        collecting = True
+        select = False
         num = 0
-        oled.show_num(num, "How many?")
 
-        #TODO: FIX THIS TO WORK LIKE ONE IN workout.py
-        while collecting:
+        while not select:
+
+            oled.show_num(num, "How many?")
+
             button.wait_for_press()
-            start = time()
+            held_time = time()
             sleep(0.05)
-            while button.is_pressed:
-                sleep(0.01)
-            if time() - start > 1.5:
-                collecting = False
-            else:
+            while button.is_pressed():     #TODO: not sure if this is function or member value?
+                if time() - held_time > 2:
+                    led.color = Color("green")
+                    select = True
+                delay(0.05)
+            
+            if not select:
                 num += 1
-                oled.show_num(num, "How many?")
+        
+        led.off()
 
         if os.path.isfile(records_path):
             with open(records_path, 'r') as rec:
