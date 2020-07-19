@@ -33,7 +33,7 @@ class Challenge:
         description: text to output to OLED display for challenge (str)
         """
         
-        self.name = name
+        self.name = name.replace(" ", "_")
         self.style = style
         self.num_time_sec = num_time_sec
         self.description = description
