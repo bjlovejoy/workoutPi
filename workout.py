@@ -28,16 +28,16 @@ Called from main and result passed into generate_rand_time
 '''
 def select_mode():
     select = False
-    modes = ["NORMAL", "LIGHTNING"]
+    modes = ["LIGHTNING", "NORMAL"]
     num_modes = len(modes) - 1
     num = 0
 
     while not select:
 
+        num += 1
         if num > num_modes:
             num = 0
-        else:
-            num += 1
+
         oled.show_msg("Select Mode:", modes[num])
 
         button.wait_for_press()
