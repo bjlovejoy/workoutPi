@@ -33,6 +33,6 @@ sudo python3 Adafruit_Python_SSD1306/setup.py install
 sudo pip3 install gpiozero
 sudo pip3 install colorzero
 
-sudo cp myscript.service /etc/systemd/system/myscript.service
+sudo cp myscript.service /etc/systemd/system/
 sudo systemctl enable workout
 sudo systemctl start workout
