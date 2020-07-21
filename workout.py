@@ -43,7 +43,7 @@ def select_mode():
         button.wait_for_press()
         held_time = time()
         sleep(0.05)
-        while button.is_pressed():
+        while button.is_pressed:
             if time() - held_time > 2:
                 led.color = Color("green")
                 select = True
