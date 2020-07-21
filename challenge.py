@@ -57,7 +57,7 @@ class Challenge:
             held_time = time()
             sleep(0.05)
             while button.is_pressed:
-                if time() - held_time > 2:
+                if time() - held_time > 1.5:
                     led.color = Color("green")
                     select = True
                 sleep(0.05)
