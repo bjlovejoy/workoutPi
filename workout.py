@@ -47,7 +47,7 @@ def select_mode():
             if time() - held_time > 2:
                 led.color = Color("green")
                 select = True
-            delay(0.05)
+            sleep(0.05)
     
     led.off()
     return modes[num]

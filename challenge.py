@@ -53,11 +53,11 @@ class Challenge:
             button.wait_for_press()
             held_time = time()
             sleep(0.05)
-            while button.is_pressed():     #TODO: not sure if this is function or member value?
+            while button.is_pressed:
                 if time() - held_time > 2:
                     led.color = Color("green")
                     select = True
-                delay(0.05)
+                sleep(0.05)
             
             if not select:
                 num += 1
