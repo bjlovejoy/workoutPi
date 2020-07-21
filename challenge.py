@@ -3,6 +3,7 @@ import datetime
 from time import time, sleep
 
 from gpiozero import Button, RGBLED, Buzzer
+from colorzero import Color
 
 from oled import OLED
 

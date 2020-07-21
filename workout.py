@@ -4,6 +4,7 @@ from time import time, sleep
 from random import randint, choice
 
 from gpiozero import RGBLED, Button, Buzzer
+from colorzero import Color
 
 from exercise import Exercise
 from challenge import Challenge
