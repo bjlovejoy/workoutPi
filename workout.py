@@ -38,7 +38,7 @@ def select_mode():
             num = 0
         else:
             num += 1
-        oled.show_msg("Select Mode:", modes[num]
+        oled.show_msg("Select Mode:", modes[num])
 
         button.wait_for_press()
         held_time = time()
