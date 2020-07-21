@@ -54,7 +54,7 @@ def select_mode():
 
 '''
 generates a random amount of time based on activity intensity
-''''
+'''
 def generate_rand_time(intensity, mode):
 
     interval = 0
