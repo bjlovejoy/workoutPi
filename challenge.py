@@ -26,18 +26,20 @@ def log_data(text):
         log.write(line)
 
 class Challenge:
-    def __init__(self, name, style, description, num_time_sec=60):
+    def __init__(self, name, style, description, num_time_sec=60, lowest=True):
         """
         name: name of the challenge to save to text file (str)
         style: how long it takes to do activity ("stopwatch") or how many done in timeframe ("counter")   (str)
         num_time_sec: time for "counter" challenges (int)
         description: text to output to OLED display for challenge (str)
+        lowest: if True, then lowest time (stopwatch) is highest score
         """
         
         self.name = name.replace(" ", "_")
         self.style = style
-        self.num_time_sec = num_time_sec
         self.description = description
+        self.num_time_sec = num_time_sec
+        self.lowest = lowest
     
     def save_results_counter(self, button, oled, led):
         records_path = "/home/pi/workoutPi/records/" + self.name + ".txt"
@@ -109,20 +111,37 @@ class Challenge:
         if os.path.isfile(records_path):
             with open(records_path, 'r') as rec:
                 times = rec.readlines()
-                if recorded_time < float(times[0].rstrip('\n')) or float(times[0].rstrip('\n')) == 0:
-                    times[2] = times[1]
-                    times[1] = times[0]
-                    times[0] = str(recorded_time) + '\n'
-                    edit_file = True
+                if lowest:
+                    if recorded_time < float(times[0].rstrip('\n')) or float(times[0].rstrip('\n')) == 0:
+                        times[2] = times[1]
+                        times[1] = times[0]
+                        times[0] = str(recorded_time) + '\n'
+                        edit_file = True
 
-                elif recorded_time < float(times[1].rstrip('\n')) or float(times[1].rstrip('\n')) == 0:
-                    times[2] = times[1]
-                    times[1] = str(recorded_time) + '\n'
-                    edit_file = True
+                    elif recorded_time < float(times[1].rstrip('\n')) or float(times[1].rstrip('\n')) == 0:
+                        times[2] = times[1]
+                        times[1] = str(recorded_time) + '\n'
+                        edit_file = True
 
-                elif recorded_time < float(times[2].rstrip('\n')) or float(times[2].rstrip('\n')) == 0:
-                    times[2] = str(recorded_time) + '\n'
-                    edit_file = True
+                    elif recorded_time < float(times[2].rstrip('\n')) or float(times[2].rstrip('\n')) == 0:
+                        times[2] = str(recorded_time) + '\n'
+                        edit_file = True
+                
+                else:
+                    if recorded_time > float(times[0].rstrip('\n')):
+                        times[2] = times[1]
+                        times[1] = times[0]
+                        times[0] = str(recorded_time) + '\n'
+                        edit_file = True
+
+                    elif recorded_time > float(times[1].rstrip('\n')):
+                        times[2] = times[1]
+                        times[1] = str(recorded_time) + '\n'
+                        edit_file = True
+
+                    elif recorded_time > float(times[2].rstrip('\n')):
+                        times[2] = str(recorded_time) + '\n'
+                        edit_file = True
 
             if edit_file:
                 with open(records_path, "w") as rec:
